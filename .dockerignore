@@ -1,0 +1,5 @@
+packages/client/*
+!packages/client/src
+!packages/client/public
+!packages/client/package.json
+!packages/client/yarn.lock

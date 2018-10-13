@@ -1,0 +1,12 @@
+{
+  "alias": ["letgo.space"],
+  "type": "static",
+  "static": {
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
