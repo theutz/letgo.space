@@ -13,12 +13,12 @@ const entryAnimation = ({ r1, r2, r3, x1, x2, y1, y2 }) => keyframes`
   opacity: 0;
   transform: scale(1.1) rotate(${r1}deg) translate(0px, 0px);
 }
-1% {
+3% {
   opacity: 1;
   transform: scale(1) rotate(${r1}deg) translate(${x1}px, ${y1}px);
 }
 20% {
-  transform: scale(1) rotate(${r1}deg) translate(${x1}px, ${y1}px);
+  transform: scale(0.8) rotate(${r1}deg) translate(${x1}px, ${y1}px);
 }
 50% {
   opacity: 1;
@@ -56,7 +56,7 @@ const StyledNotecard = styled.div`
     getColor(`pens.${isMine ? "red" : "black"}`)(props)};
   animation-name: ${entryAnimation};
   animation-fill-mode: both;
-  animation-duration: 30s;
+  animation-duration: 20s;
   animation-timing-function: ease-out;
   transform: translateZ(0) rotate(${({ rotation }) => rotation}deg);
   height: ${lineHeight * 3 * scale}rem;
