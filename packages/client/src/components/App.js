@@ -25,7 +25,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    this.items$.subscribe(item => {
+    this.items$ = getItems$().subscribe(item => {
       const { cards } = this.state
       this.setState({ cards: [...cards, item] })
     })
