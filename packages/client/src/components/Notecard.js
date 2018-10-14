@@ -4,52 +4,42 @@ import random from "random"
 
 import { getColor, getFont } from "../theme"
 
-const scale = 1.5
+const scale = 3
 const lineHeight = scale * 0.66
-const rotationRange = 55
+const randRange = [-50, 50]
 
-const entryAnimation = ({ rotation }) => keyframes`
-from {
+const entryAnimation = ({ r1, r2, r3, x1, x2, y1, y2 }) => keyframes`
+0% {
   opacity: 0;
-  transform: scale(1.5) rotate(${rotation}deg);
+  transform: scale(1.1) rotate(${r1}deg) translate(0px, 0px);
 }
-to {
+1% {
   opacity: 1;
-  transform: scale(1) rotate(${rotation}deg);
+  transform: scale(1) rotate(${r1}deg) translate(${x1}px, ${y1}px);
 }
-`
-
-const staticAnimation = ({ rotation }) => keyframes`
-from {
-  transform: scale(1) rotate(${rotation}deg)
+20% {
+  transform: scale(1) rotate(${r1}deg) translate(${x1}px, ${y1}px);
 }
-33% {
-  transform: scale(0.8) rotate(${rotation - rotation / 4}deg)
-}
-66% {
-  transform: scale(0.8) rotate(${rotation + rotation / 4}deg);
-}
-to {
-  transform: scale(1) rotate(${rotation}deg)
-}
-`
-
-const exitAnimation = ({ rotation }) => keyframes`
-from {
+50% {
   opacity: 1;
-  transform: scale(1) rotate(${rotation}deg);
+  transform: scale(0.5) rotate(${r1}deg) translate(${x2}px, ${y2}px);
 }
-to {
+100% {
   opacity: 0;
-  transform: scale(0) rotate(${rotation}deg);
+  transform: scale(0) rotate(${r1}deg) translate(${x1}px, ${y2}px);
 }
 `
-
 class Notecard extends Component {
   state = {
-    rotation: random.int(-rotationRange, rotationRange),
-    top: random.int(-10, 90),
-    left: random.int(-10, 90),
+    r1: random.int(...randRange),
+    r2: random.int(...randRange),
+    r3: random.int(...randRange),
+    x1: random.int(...randRange),
+    x2: random.int(...randRange),
+    y1: random.int(...randRange),
+    y2: random.int(...randRange),
+    top: random.int(-2, 2),
+    left: random.int(-2, 2),
   }
 
   render() {
@@ -62,17 +52,17 @@ class Notecard extends Component {
 
 const StyledNotecard = styled.div`
   position: fixed;
-  animation-name: ${entryAnimation}, ${staticAnimation}, ${exitAnimation};
-  animation-duration: 0.5s, 10s, 10s;
-  animation-delay: 0s, 0.5s, 10s;
-  animation-timing-function: ease-in-out, ease-in-out, ease-in-out;
-  animation-fill-mode: backwards, none, forwards;
-  animation-iteration-count: 1, 1, 1;
+  color: ${({ isMine, ...props }) =>
+    getColor(`pens.${isMine ? "red" : "black"}`)(props)};
+  animation-name: ${entryAnimation};
+  animation-fill-mode: both;
+  animation-duration: 30s;
+  animation-timing-function: ease-out;
   transform: translateZ(0) rotate(${({ rotation }) => rotation}deg);
   height: ${lineHeight * 3 * scale}rem;
   width: ${lineHeight * 5 * scale}rem;
-  top: ${({ top }) => top}vh;
-  left: ${({ left }) => left}vw;
+  top: calc(50% - ${({ top }) => top * 3}in);
+  left: calc(50% - ${({ left }) => left * 5}in);
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: ${lineHeight / 2}rem;
