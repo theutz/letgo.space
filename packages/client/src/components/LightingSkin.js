@@ -2,6 +2,7 @@ import styled from "styled-components"
 
 const LightingSkin = styled.div`
   position: fixed;
+  pointer-events: none;
   z-index: 2000;
   width: 100%;
   height: 100%;
